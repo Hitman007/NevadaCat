@@ -10,7 +10,7 @@ Author URI:
 
 namespace NevadaCat;
 
-//die('NevadaCat Plugin!!');
+die('NevadaCat Plugin!!');
 
 require_once 'NevadaCat/NevadaCatPlugin.class.php';
 
