@@ -26,4 +26,6 @@ class AddCatFormFieldProcessor{
 		}else{update_post_meta($postID, 'temporary_hold', 'GO');}
 	}
 	
+	public function doProcessAttachedImage(){}
+	
 }

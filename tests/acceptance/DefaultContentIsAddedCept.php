@@ -1,6 +1,6 @@
 <?php
 
-//$scenario->incomplete();
+$scenario->incomplete();
 
 // Feature: Default content is added when the plugin is activated
 $I = /*am a */ new WordpressTester\WordpressTester($scenario);
@@ -19,6 +19,10 @@ $I->activatePlugin('NevadaCat');
 // Then the default content will be visible:
 $I->amOnPage('/all-cats-page/');
 $I->see('Cats! Cats! Cats!');
+
+$I->amOnPage('/feline/default-feline/');
+$I->see('Default Feline');
+
 
 // Scenario: An admin deactivates the plugin
 // Given there is a plugin

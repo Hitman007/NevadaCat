@@ -53,3 +53,27 @@ function NevadaCatAutoload($className){
 	}
 }
 spl_autoload_register('NevadaCatAutoload');
+
+function NevadaCatTesterAutoload($className){
+	$front = substr($className, 0, 15);
+	
+	//Check namespace:
+	if ($front != "NevadaCatTester"){
+		return;
+	}
+	
+	$className = substr($className, 16);
+	
+	//Check for ".class.php":
+	$fileName = '//var/www/html/wp-content/plugins/NevadaCat/tests/NevadaCatTester/' . $className . '.class.php';
+	if (file_exists($fileName)) {
+		include_once($fileName);
+	}else{
+		//Check for ".trait.php":
+		$fileName = '//var/www/html/wp-content/plugins/NevadaCat/tests/NevadaCatTester/' . $className . '.trait.php';
+		if (file_exists($fileName)) {
+			include_once($fileName);
+		}
+	}
+}
+spl_autoload_register('NevadaCatTesterAutoload');

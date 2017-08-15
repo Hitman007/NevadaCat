@@ -13,6 +13,10 @@ class FelineInputCRUDForm{
 	
 	public $user_ID;
 	
+	public function __construct(){
+		//$this->userType = $this->calculateUserType();
+	}
+	
 	public function set_post_ID($post_ID){
 		$this->post_ID = $post_ID;
 	}
@@ -64,7 +68,8 @@ class FelineInputCRUDForm{
 		$buttonControl = $this->buttonControl($userType);
 		$hiddenIDControl = $this->hiddenIDControl($userType);
 		$uploadImageControl = $this->uploadImageControl($userType);
-		$formCSS = $this->returnFormCSS();
+		$formCSS = $this->returnFormCSS($userType);
+		$formJS = $this->returnFormJS($userType);
 		
 		//Compile form:
 		$output = <<<OUTPUT
@@ -82,6 +87,9 @@ class FelineInputCRUDForm{
 <style>
 	$formCSS
 </style>
+<script>
+	$formJS
+</script>
 OUTPUT;
 
 		return $output;
@@ -234,14 +242,48 @@ OUTPUT;
 		return $output;
 	}
 
-	public function returnFormCSS(){
+	public function returnFormCSS($userType){
 		
-		$formCSS = 
-<<<formCSS
+		if($userType == "NEW"){
+			
+			$formCSS =
+			<<<formCSS
 	.small-text{font-size: .65em;}
 	.control-div{display: none;}
 formCSS;
-		
-		return $formCSS;
+			
+		}else{
+			$formCSS =
+			<<<formCSS
+	.small-text{font-size: .65em;}
+formCSS;
+			}
+			
+			return $formCSS;
 	}
+
+	public function returnFormJS($userType){
+		if($userType == "NEW"){
+			$formJS=
+<<<formJS
+//This script disables the "Next" button until the user puts something into the Name field:
+jQuery(document).ready(function(){
+	jQuery('#formButton').prop('disabled',true);
+	jQuery('#cat_name').keyup(function(){
+        jQuery('#formButton').prop('disabled', jQuery('#cat_name').val() == "" ? true : false);     
+    });
+});
+formJS;
+		
+		  }else{
+			$formJS=
+<<<formJS
+
+formJS;
+		}
+		
+		return $formJS;
+	
+	}
+	
 }

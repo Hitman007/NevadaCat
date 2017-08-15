@@ -11,7 +11,7 @@ class FelineFormListener{
 		//This means that the NEWCAT flag is sent, and data is coming in, so we're going to create a new CPT.
 		if(isset($_POST['new-cat-old-cat-flag'])){
 			if($_POST['new-cat-old-cat-flag'] == "NEWCAT"){
-				add_action('init', array($this, 'doMakeFelineBasedOnName'));
+				add_action('init', array($this, 'domakeFeline'));
 			}
 		}
 		
@@ -38,17 +38,18 @@ class FelineFormListener{
 		exit;
 	}
 	
-	public function doMakeFelineBasedOnName(){
+	public function domakeFeline(){
 		//this makes a new CPT, then processes the fields, then redirects to the actual CPT page
 		
 		// Sanity check. It can't be a new cat if it has a name already:
 		if (!(isset($_POST['cat_name']))){ 
-			return;
+			$felineName = "My Cat";
+		 }else{
+			$felineName = $_POST['cat_name'];
 		}
-		
-		$felineName = $_POST['cat_name'];
 		$FelineCPTFactory = new FelineCPTFactory;
-		$ID = $FelineCPTFactory->makeFelineBasedOnName($felineName);
+		$ID = $FelineCPTFactory->makeFeline($felineName);
+		$ImageUploadHandler = new ImageUploadHandler($ID);
 		$AddCatFormFieldProcessor = new AddCatFormFieldProcessor($ID);
 		$AddCatFormFieldProcessor->doProcessFields();
 		$activateModifyShoppingCartFeature = $this->activateModifyShoppingCartFeature();
@@ -77,8 +78,6 @@ class FelineFormListener{
 		$FelineInputCRUDForm->calculateUserType();
 		add_filter('the_content', array($FelineInputCRUDForm, 'getFormForFeline'));
 	}
-	
-
 	
 	public function activateModifyShoppingCartFeature(){
 		//$ModifyWooCartFeature = new ModifyWooCartFeature;

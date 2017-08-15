@@ -19,7 +19,7 @@ class UserIsLoggedInShortCodeHTMLFactory{
 	
 	public function doCreateFelineCPT($felineName){
 		$FelineCPTFactory = new FelineCPTFactory;
-		$postID = $FelineCPTFactory->makeFelineBasedOnName($felineName);
+		$postID = $FelineCPTFactory->makeFeline($felineName);
 		return $postID;
 	}
 }

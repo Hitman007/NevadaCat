@@ -6,7 +6,7 @@ class FelineCPTFactory{
 	
 	public function __construct(){}
 	
-	public function makeFelineBasedOnName($felineName) {
+	public function makeFeline($felineName) {
 		
 		$defaultImageMediaLibraryID = 2569;
 		// Set in the main NevadaCatPlugin.class.php

@@ -1,6 +1,6 @@
 <?php
 
-$I = new WordpressTester\WordpressTester($scenario);
+$I = new NevadaCatTester\NevadaCatTester($scenario);
 
 $I->wantTo("See several 'views' in the feline CRUD form");
 
@@ -32,3 +32,5 @@ $I->wait('5');
 
 $I->expectTo('see the feline has been created and I am on the CRUD page');
 $I->see('DELETETHISCAT');
+
+$I->deleteFeline('DELETETHISCAT');
