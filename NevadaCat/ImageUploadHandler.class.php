@@ -31,7 +31,17 @@ class ImageUploadHandler{
 				'post_status' => 'inherit',
 				'menu_order' => $_i + 1000
 		);
-		$attach_id = wp_insert_attachment( $attachment, $uploadfile );
+		$attach_id= wp_insert_attachment( $attachment, $uploadfile );
+		
+		$fullsizepath = get_attached_file( $attach_id);
+		
+		if ( false === $fullsizepath || !file_exists($fullsizepath) )
+			return;
+			
+			if ( wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $fullsizepath ) ) )
+				return true;
+				else
+					return false;
 	}
 	
 }
