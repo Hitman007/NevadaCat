@@ -186,7 +186,7 @@ genderControl;
 		$optionalWellPutItOnTheBox = __("(Optional. We'll put it on the box!)");
 $uploadImageControl = <<<OUTPUT
 <div id = 'upload-image-input-div' class = 'control-div' >
-		<label for = 'cat_image' style='float:left; width:100%'>$upLoadCatsImage $optionalWellPutItOnTheBox</label>
+		<label for = 'cat_image' style='float:left; width:100%'>Hi!! $upLoadCatsImage $optionalWellPutItOnTheBox</label>
 		<!-- TODO
 
 		<div class='default_img'><img src = 'http://localhost/wp-content/uploads/2012/12/cat_default_img.jpg' ></div>
