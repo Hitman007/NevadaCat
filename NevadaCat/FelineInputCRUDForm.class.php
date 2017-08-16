@@ -183,16 +183,10 @@ genderControl;
 	
 	public function uploadImageControl($userType){
 		$upLoadCatsImage = __("Upload Your Cat's Image");
-		$optionalWellPutItOnTheBox = __("(Optional. We'll put it on the box!yo)");
+		$optionalWellPutItOnTheBox = __("(Optional. We'll put it on the box!)");
 $uploadImageControl = <<<OUTPUT
 <div id = 'upload-image-input-div' class = 'control-div' >
 		<label for = 'cat_image' style='float:left; width:100%'>$upLoadCatsImage $optionalWellPutItOnTheBox</label>
-		<!-- TODO
-
-		<div class='default_img'><img src = 'http://localhost/wp-content/uploads/2012/12/cat_default_img.jpg' ></div>
-
-
-		-->
 		<input type='file' name='cat_image' id='cat_image' />
 	</div><!-- end: #add_cat_image -->
 OUTPUT;
