@@ -49,7 +49,7 @@ class FelineFormListener{
 		}
 		$FelineCPTFactory = new FelineCPTFactory;
 		$ID = $FelineCPTFactory->makeFeline($felineName);
-		$ImageUploadHandler = new ImageUploadHandler($ID);
+
 		$AddCatFormFieldProcessor = new AddCatFormFieldProcessor($ID);
 		$AddCatFormFieldProcessor->doProcessFields();
 		$activateModifyShoppingCartFeature = $this->activateModifyShoppingCartFeature();

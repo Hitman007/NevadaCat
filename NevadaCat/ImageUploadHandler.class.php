@@ -31,7 +31,8 @@ class ImageUploadHandler{
 				'post_status' => 'inherit',
 				'menu_order' => $_i + 1000
 		);
-		$attach_id= wp_insert_attachment( $attachment, $uploadfile );
+		$attach_id = wp_insert_attachment( $attachment, $uploadfile );
+		set_post_thumbnail( $post_id, $attach_id);
 	}
 	
 }

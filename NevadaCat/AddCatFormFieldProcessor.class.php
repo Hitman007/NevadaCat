@@ -24,6 +24,8 @@ class AddCatFormFieldProcessor{
 			$temporary_hold = $_POST['temporary_hold'];
 			update_post_meta($postID, 'temporary_hold', 'HOLD');
 		}else{update_post_meta($postID, 'temporary_hold', 'GO');}
+		
+		$ImageUploadHandler = new ImageUploadHandler($postID);
 	}
 	
 	public function doProcessAttachedImage(){}
