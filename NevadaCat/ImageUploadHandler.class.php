@@ -11,7 +11,18 @@ class ImageUploadHandler{
 	}
 	
 	public function isImageUploadingBool(){
-		return TRUE;
+		if(isset($_FILES['cat_image']) && ($_FILES['cat_image']['size'] > 0)){
+			// Get the type of the uploaded file. This is returned as "type/extension"
+			$arr_file_type = wp_check_filetype(basename($_FILES['xxxx_image']['name']));
+			$uploaded_file_type = $arr_file_type['type'];
+			// Set an array containing a list of acceptable formats
+			$allowed_file_types = array('image/jpg','image/jpeg','image/gif','image/png');
+			if(in_array($uploaded_file_type, $allowed_file_types)) {
+				return TRUE;
+			}
+		 }else{
+			return FALSE;
+		}
 	}
 	
 	public function handleImageUpload($post_id){
