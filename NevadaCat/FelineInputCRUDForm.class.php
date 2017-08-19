@@ -3,34 +3,34 @@
 namespace NevadaCat;
 
 class FelineInputCRUDForm{
-	
+
 	//When viewing the Felein CRUD form, the behavior of the form is controlled by the type of user.
 	//ADMIN, POST-AUTHOR, or ANONYMOUS
-	
+
 	public $userType;
-	
+
 	public $post_ID;
-	
+
 	public $user_ID;
-	
+
 	public function __construct(){
 		//$this->userType = $this->calculateUserType();
 	}
-	
+
 	public function set_post_ID($post_ID){
 		$this->post_ID = $post_ID;
 	}
-	
+
 	public function set_user_ID($user_ID){
-		$this->user_ID = $user_ID;		
+		$this->user_ID = $user_ID;
 	}
-	
+
 	public function getFormForFeline(){
 		//This function is fired when a feline CPT is viewed directly
 		$ID = $this->post_ID;
 		return ($this->doReturnForm($ID));
 	}
-		
+
 	public function calculateUserType(){
 		$userType = "ANONYMOUS";
 
@@ -38,7 +38,7 @@ class FelineInputCRUDForm{
 			$userType = "ANONYMOUS";
 			$this->userType = "ANONYMOUS";
 		}
-		
+
 		if(is_user_logged_in()){
 
 			$postID = $this->post_ID;
@@ -53,10 +53,10 @@ class FelineInputCRUDForm{
 			}
 		}
 		$this->userType = $userType;
-	} 
-	
+	}
+
 	public function doReturnForm($ID){
-		
+
 		//New cat / old cat[already created record] flag:
 		if($ID == 0){$this->userType = "NEW"; $userType = "NEW"; $newCatFlag = "<input type = 'hidden' name = 'new-cat-old-cat-flag' id = 'new-cat-old-cat-flag' value = 'NEWCAT' />";}
 		if(!($ID == 0)){$userType = $this->userType; $newCatFlag = "";}
@@ -70,7 +70,7 @@ class FelineInputCRUDForm{
 		$uploadImageControl = $this->uploadImageControl($userType);
 		$formCSS = $this->returnFormCSS($userType);
 		$formJS = $this->returnFormJS($userType);
-		
+
 		//Compile form:
 		$output = <<<OUTPUT
 <form name = 'add-cat-form' id = 'add-cat-form' method = 'post' enctype='multipart/form-data'>
@@ -94,7 +94,7 @@ OUTPUT;
 
 		return $output;
 	}
-	
+
 	public function nameInputControl($userType){
 		$nameInputControl = "";
 		if($userType == "NEW"){
@@ -107,7 +107,7 @@ nameInputControl;
 		}
 		return $nameInputControl;
 	}
-		
+
 	public function genderControl($userType){
 		$postID = $this->post_ID;
 		$gender = get_post_meta($postID, 'gender');
@@ -131,20 +131,20 @@ nameInputControl;
 genderControl;
 		}
 		return $genderControl;
-	
+
 	}
-	
+
 	public function productControl($userType){
 		$userType = $this->userType;
 		$postID = $this->post_ID;
-		
+
 		//l18n:
 		$chickenPuddin = __("Chicken Puddin' [Adult Cat Food]");
 		$chooseAProduct = __("Choose a product:");
 		$kittenkaboodle = __("Kitten Kaboodle [First six months]");
 		$skinnyCat = __("Skinny Cat [Weight loss food]");
 		$theMountain = __("The Mountain [Mature / low energy cats]");
-		
+
 		$foodType = get_post_meta($postID, 'food_type');
 		$foodType = $foodType[0];
 
@@ -153,7 +153,7 @@ genderControl;
 		if($foodType == "skinnycat"){$skinnyCatSelected = "CHECKED";$anonymousText = "Subscribes to Skinny Cat";}else{$skinnyCatSelected = "";}
 		if($foodType == "kittenkaboobdle"){$kittenkaboobdleChecked = "CHECKED";$anonymousText = "Subscribes to Kitten Kabooble";}else{$kittenkaboobdleChecked = "";}
 		if($foodType == "themountain"){$themountainChecked = "CHECKED"; $anonymousText = "Subscribes to the Mountain";}else{$themountainChecked = "";}
-		
+
 		$productControl = "
 		<div id = 'product-input-div' class = 'control-div' >
 		$chooseAProduct<br />
@@ -163,24 +163,24 @@ genderControl;
 		<input type='radio' name='food_type' value = 'skinnycat' id = 'product_radio3' class = 'product_radio_selection' $skinnyCatSelected > $skinnyCat<br />
 		<input type='radio' name='food_type' value = 'themountain' id = 'product_radio4' class = 'product_radio_selection' $themountainChecked > $theMountain<br />
 		<br />
-		
+
 	</div><!-- end: #product-input-div -->";
-		
+
 		if($userType == "ANONYMOUS"){
 			$productControl = "
 				<div id = 'product-input-div'>
 						$anonymousText
 				</div><!-- end: #sproduct-input-div -->";
 		}
-		
+
 		return $productControl;
-		
+
 	}
-		
+
 	public function newCatFlag(){
 		return "<input type = 'hidden' name = 'new-cat-old-cat-flag' id = 'new-cat-old-cat-flag' value = 'NEWCAT' />";
 	}
-	
+
 	public function uploadImageControl($userType){
 		$upLoadCatsImage = __("Upload Your Cat's Image");
 		$optionalWellPutItOnTheBox = __("(Optional. We'll put it on the box!)");
@@ -192,7 +192,7 @@ $uploadImageControl = <<<OUTPUT
 OUTPUT;
 		return $uploadImageControl;
 	}
-	
+
 	public function buttonControl($userType){
 		$userType = $this->userType;
 		$postID = $this->post_ID;
@@ -206,13 +206,13 @@ OUTPUT;
 			<input type = 'submit' id = 'save-addcat' name = 'save-addcat' class = 'cat_button' value = 'Add Another Cat' /><br />
 			<input type = 'submit' id = 'save-proceeed' name = 'save-proceeed' class = 'cat_button' value = 'Proceed to Payment' /><br /><br />
 		</div><!-- end: #button-control-div -->";
-		
+
 		if (($userType == "POST-AUTHOR") or ($userType == "ADMIN")){$buttonControl = $buttonControl . "
 			<div id = 'button-control-div'>
 				<input type = 'checkbox' name = 'temporary_hold' id = 'temporary_hold' $temporaryHoldChecked /> Temporarily Stop Subscription<br /><br />
 			</div><!-- end: #button-control-div -->
 		";}
-	
+
 		if ($userType == "ANONYMOUS"){
 			$buttonControl = "";
 		}
@@ -221,38 +221,38 @@ OUTPUT;
 			$buttonControl = "
 				<div id = 'button-control-div'>
 					<input type='submit' id = 'formButton' name = 'formButton' class = 'cat_button' value = 'Save Cat' /><br /><br /><br />
-					&nbsp;&nbsp;<span id = 'cancel-link' style = 'font-size:80%'><a href = '$siteURL/all-cats/'>CANCEL</a></span>
+					&nbsp;&nbsp;<span id = 'cancel-link' style = 'font-size:50%'><a href = '$siteURL/all-cats/'>CANCEL</a></span>
 				</div><!-- end: #button-control-div -->
 			";
 		}
-	
+
 		return $buttonControl;
 	}
-	
+
 	public function hiddenIDControl($userType){
-		
+
 		$postID = $this->post_ID;
 		$output = "<input type = 'hidden' name = 'crg-hidden-post-id' id = 'crg-hidden-post-id' value = '$postID' />";
 		return $output;
 	}
 
 	public function returnFormCSS($userType){
-		
+
 		if($userType == "NEW"){
-			
+
 			$formCSS =
 			<<<formCSS
 	.small-text{font-size: .65em;}
 	.control-div{display: none;}
 formCSS;
-			
+
 		}else{
 			$formCSS =
 			<<<formCSS
 	.small-text{font-size: .65em;}
 formCSS;
 			}
-			
+
 			return $formCSS;
 	}
 
@@ -264,20 +264,20 @@ formCSS;
 jQuery(document).ready(function(){
 	jQuery('#formButton').prop('disabled',true);
 	jQuery('#cat_name').keyup(function(){
-        jQuery('#formButton').prop('disabled', jQuery('#cat_name').val() == "" ? true : false);     
+        jQuery('#formButton').prop('disabled', jQuery('#cat_name').val() == "" ? true : false);
     });
 });
 formJS;
-		
+
 		  }else{
 			$formJS=
 <<<formJS
 
 formJS;
 		}
-		
+
 		return $formJS;
-	
+
 	}
-	
+
 }
